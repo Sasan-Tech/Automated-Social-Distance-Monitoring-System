@@ -1,4 +1,4 @@
-#COS30018 Intelligent System
+# COS30018 Intelligent System
 *Semester 1, 2021*
 
 Group Members:
