@@ -3,6 +3,7 @@ from PyQt5.QtCore import QPropertyAnimation, QUrl
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QStyle
+from PIL.ImageQt import ImageQt
 
 from run_photo import *
 
@@ -27,8 +28,8 @@ class UIFunctions(QMainWindow):
             
     def uploadImage(self):
         imagePath = QFileDialog.getOpenFileName()
-        print(imagePath)
-        pixmap = QPixmap(imagePath[0])
+        qimage = ImageQt(predict_photo("exported/rfcn_exported/frozen_inference_graph.pb", imagePath[0]))
+        pixmap = QtGui.QPixmap.fromImage(qimage)
         self.ui.image_label.setPixmap(pixmap)
         self.ui.image_label.resize(pixmap.width(), pixmap.height())        
         

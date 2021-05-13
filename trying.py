@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.image_label = QtWidgets.QLabel(self.page)
         self.image_label.setMinimumSize(QtCore.QSize(0, 0))
-        self.image_label.setMaximumSize(QtCore.QSize(16777215, 700))
+        self.image_label.setMaximumSize(QtCore.QSize(16777215, 500))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setPointSize(30)

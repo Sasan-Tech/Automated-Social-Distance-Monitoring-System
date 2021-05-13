@@ -1,37 +1,33 @@
 #================================================= LIBRARIES =====================================================
+from matplotlib.figure import Figure
 import numpy as np
-import six.moves.urllib as urllib
-import glob
 import itertools
-import zipfile
 import matplotlib
 import math
 import random
-import cv2
 import tensorflow as tf
+import io
 
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
-from collections import defaultdict
 from matplotlib import pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 from object_detection.utils import ops as utils_ops
 from numba import jit, cuda
+from PyQt5.QtGui import QImage, QPixmap
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 matplotlib.use('TkAgg')
 #=================================================================================================================
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #===================================== Define Path and other variables ===========================================
+IMAGE_OUTPUT_SIZE = (12, 8)
+SAFE_DISTANCE = 100 #in pixels
+VIOLATION_ARR = []
+
 def predict_photo(frozen_graph, image):
-  IMAGE_OUTPUT_SIZE = (12, 8)
-  SAFE_DISTANCE = 100 #in pixels
-  VIOLATION_ARR = []
-
-  #FROZEN_RFCN_GRAPH = "predicted_video/frozen_inference_graph.pb"
-  #FROZEN_SSD_INCEPTION_GRAPH = "/content/drive/MyDrive/SocialDistancing/Models/exported/ssd_inception_exported/frozen_inference_graph.pb"
-  #FROZEN_SSD_MOBILENET = ""
-
+  frozen_graph
   label_map = label_map_util.load_labelmap("label_map.pbtxt")
   #==============================================================================================================
   #//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,8 +41,6 @@ def predict_photo(frozen_graph, image):
       graph_def.ParseFromString(serialized_graph)
       tf.import_graph_def(graph_def, name='')
 
-  categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=1, use_display_name=True)
-  category_index = label_map_util.create_category_index(categories)
   #==============================================================================================================
   #//////////////////////////////////////////////////////////////////////////////////////////////////////////////
   #==================================== Calculation process =====================================================
@@ -112,40 +106,24 @@ def predict_photo(frozen_graph, image):
   #============================================================================================================================
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   #============================================== Entrance ====================================================================
-  # Indexer (to iterate the array)
-  limit = 0;
-
-  #The values that we count manually
-  #real_violation = [10, 10, 6, 11, 7]
-
-  #(n-1)*n, where n is the number of person in the image
-  #all_connection = [462, 380, 272, 342, 306]
-
-  #The pictures that we take are 6120, 6217, 6257, 6436, 6800
-  #frames = [6120, 6217, 6257, 6436, 6800]
-
-  #To count for the number of violation that happens in each picture
-  violation = 0
-
-  #To count for the number of distance that do not violate the minimum distance
-  negative_count = 0
-
   # Load the image
   image = Image.open(image)
   width, height = image.size
 
+  '''------ Bird's eye view [Partially Done] --------
   # Bird's eye view key points
-  # corners = np.array([[0, 445], [421, 540], [728, 0], [915, 0]], dtype=np.float32)
+  corners = np.array([[0, 445], [421, 540], [728, 0], [915, 0]], dtype=np.float32)
 
   #Inverse Perspective Mapping (IPM) --> Remove perspective effect by remapping the image, resulting a top-down view.
-  # ipm_params = np.array([[360,height],[540,height],[360,0],[540,0]], dtype=np.float32)
-  # ipm_matrix = cv2.getPerspectiveTransform(corners, ipm_params)
+  #ipm_params = np.array([[360,height],[540,height],[360,0],[540,0]], dtype=np.float32)
+  ipm_matrix = cv2.getPerspectiveTransform(corners, ipm_params)
+  '''
   
   # change to numpy array
   image_np = image_to_numpy_array(image)
 
   # Turn this on to see the bird's eye view
-  #image_np = cv2.warpPerspective(image_np, ipm_matrix, (width, height))
+  # image_np = cv2.warpPerspective(image_np, ipm_matrix, (width, height))
 
   # Get the output dict
   output_dict = run_inference(image_np, detection_graph)
@@ -159,10 +137,11 @@ def predict_photo(frozen_graph, image):
       #[xmin, ymin, xmax - xmin, ymax - ymin]
       centroid = (coordinate[0] + (coordinate[2]/2), coordinate[1] + (coordinate[3]/2))
 
-      # To find the ground of the box
-      #centroid = list(centroid)
-      #centroid[1] = centroid[1] + ((coordinate[3] - coordinate[1])/2)
-      #centroid = tuple(centroid)
+      '''----- To find the ground of the box -----
+      centroid = list(centroid)
+      centroid[1] = centroid[1] + ((coordinate[3] - coordinate[1])/2)
+      centroid = tuple(centroid)
+      '''
 
       centroids.append(centroid)
       coordinates.append(coordinate)
@@ -173,7 +152,6 @@ def predict_photo(frozen_graph, image):
   # Show the image
   fig, axis = plt.subplots(figsize = (10, 6), dpi=90)
   axis.imshow(image_np, interpolation='nearest')
-  # axis.text(20, height-70, "Real number of violations: {}".format(real_violation[limit]))
 
   # Draw the boxes and centroids
   for coordinate, centroid in zip(coordinates, centroids):
@@ -208,37 +186,16 @@ def predict_photo(frozen_graph, image):
           dy = middle[1] + dy*10
 
       if average_distance < 2:
-          violation = violation + 1
           axis.annotate((round(average_distance, 2)), xy=middle, color='white', xytext=(dx, dy), fontsize=10, bbox=dict(facecolor='red', edgecolor='white', boxstyle='round', pad=0.2), zorder=30)
           axis.plot((x1, x2), (y1, y2), linewidth=2, color='red', zorder=15)
-      else:
-          negative_count = negative_count + 1
   
   #------------------------------------------------
-  # Show the performance of the model
+  # Return the predicted picture
   #------------------------------------------------
-  # FN --> Detected as no violation where violation exist
-  # TP --> Detected as violation and violation exists
-  # Precision = TP / (TP + FP)
-  # Recall = TP / (TP + FN)
-  #-----------------------------------------------
-  # axis.text(20, height-55, "Number of violation detected: {}".format(violation))
-  
-  # FN = negative_count - (all_connection[limit] - real_violation[limit])
-
-  # Precision = real_violation[limit] / violation
-  # Recall = real_violation[limit] / (real_violation[limit] + FN)
-  # F1 = 2 * ((Precision * Recall)/(Precision + Recall))
-
-  # axis.text(20, height-40, "Precision: {}".format(Precision))
-  # axis.text(20, height-25, "Recall: {}".format(Recall))
-  # axis.text(20, height-10, "F1 Score: {}".format(F1))
-
-  #------------------------------------------------
-  # Show and save the predicted picture
-  #------------------------------------------------
-  # plt.tight_layout()
-  # plt.show(block=False)
-  # plt.pause(3)
-  return axis
+  buf = io.BytesIO()
+  plt.tight_layout()
+  plt.savefig(buf)
+  buf.seek(0)
+  img = Image.open(buf)
+  return img
 #============================================================================================================================
