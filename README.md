@@ -1,7 +1,1 @@
-# Intelligent-Systems
-This repository was created for Project Assignment of COS30018 INTELLIGENT SYSTEMS in Swinburne Sarawak Semester 1, 2021.
-
-Group Members:
-1. Alesandro Michael Ferdinand (101228984)
-2. Bryan Austyn Ichsan (101229576)
-3. George Kennedy (101218969)
+# Intelligent-SystemsThis repository was created for Project Assignment of COS30018 INTELLIGENT SYSTEMS in Swinburne Sarawak Semester 1, 2021.Group Members:1. Alesandro Michael Ferdinand (101228984)2. Bryan Austyn Ichsan (101229576)3. George Kennedy (101218969)**Project**: Design and implementation of a simple machine learning system that could automatically detect persons and analyze the social distance between them.**Modules involved**: Machine learning, Deep Learning, Person detection
