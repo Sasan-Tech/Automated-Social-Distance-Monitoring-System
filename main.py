@@ -31,8 +31,14 @@ class MainWindow(QMainWindow):
         ## TOGGLE/BURGUER MENU
         ########################################################################
         self.ui.Btn_Toggle.clicked.connect(lambda: UIFunctions.toggleMenu(self, 250, True))
+
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        frozen_path = "exported/rfcn_exported/frozen_inference_graph.pb"
+
+        # Add other paths
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        self.ui.ImageButton.clicked.connect(lambda: UIFunctions.uploadImage(self))
+        self.ui.ImageButton.clicked.connect(lambda: UIFunctions.uploadImage(self, frozen_path))
 
         ## PAGES
         ########################################################################

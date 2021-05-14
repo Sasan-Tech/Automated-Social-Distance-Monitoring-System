@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QStyle
 from PIL.ImageQt import ImageQt
 
 from run_photo import *
+from analyse_area import *
 
 class UIFunctions(QMainWindow):
 
@@ -26,9 +27,15 @@ class UIFunctions(QMainWindow):
             self.animation.setEndValue(widthExtended)
             self.animation.start()
             
-    def uploadImage(self):
+    def uploadImage(self, frozen_path):
         imagePath = QFileDialog.getOpenFileName()
-        qimage = ImageQt(predict_photo("exported/rfcn_exported/frozen_inference_graph.pb", imagePath[0]))
+        qimage = ImageQt(predict_photo(frozen_path, imagePath[0]))
+
+
+        #   !!! NEED TO EDIT THIS LATER ON !!!
+        #qimage = ImageQt(mask_area(frozen_path, imagePath[0]))
+        
+
         pixmap = QtGui.QPixmap.fromImage(qimage)
         self.ui.image_label.setPixmap(pixmap)
         self.ui.image_label.resize(pixmap.width(), pixmap.height())        
