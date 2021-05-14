@@ -25,6 +25,7 @@ tf.disable_v2_behavior()
 matplotlib.use('TkAgg')
 
 from analyse_timeline import *
+from analyse_area import *
 
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,6 +120,7 @@ def run_inference():
             tope = 10
             new = True
             VIOLATION_ARR = []
+            ALL_CENTROIDS = []
             while(cap.isOpened()):
                 # Capture frame-by-frame
                 ret, frame = cap.read()
@@ -194,6 +196,9 @@ def run_inference():
                         axis.add_patch(matplotlib.patches.Circle(
                             (centroid[0], centroid[1]), 3, color='yellow', zorder=20))
 
+                        #Add the centroids for the area analysis    
+                        ALL_CENTROIDS.append(centroid)
+
                     # Display lines between centroids
                     for permutation in permutations:
                         x1 = permutation[0][0]
@@ -256,7 +261,8 @@ def run_inference():
                     # Press esc key to stop the real time video
                     if(key == 27):
                         break
-
+                
+                # <<< Call the analyse area >>>
 
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
