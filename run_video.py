@@ -1,10 +1,6 @@
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ===================================== Importing Libraries =======================================================
-<<<<<<< HEAD
-from run_photo import VIOLATION_ARR
-=======
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
 from numba import jit, cuda
 from object_detection.utils import ops as utils_ops
 from PIL import Image
@@ -28,10 +24,7 @@ tf.disable_v2_behavior()
 
 matplotlib.use('TkAgg')
 
-<<<<<<< HEAD
 from analyse_timeline import *
-=======
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
 
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,11 +33,7 @@ IMAGE_OUTPUT_SIZE = (12, 8)
 SAFE_DISTANCE = 100  # in pixels
 
 # Frozen Graph of trained models (rfcn_resnet101_coco_2018_01_28, ssd_enceptionv2, ssd_mobilenet_v1_coco_2018_01_28)
-<<<<<<< HEAD
 FROZEN_RFCN_GRAPH = "exported/rfcn_exported/frozen_inference_graph.pb"  # define the model path here
-=======
-FROZEN_RFCN_GRAPH = "frozen_inference_graph.pb"  # define the model path here
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
 #FROZEN_SSD_INCEPTION_GRAPH = "ssd_inception_exported/frozen_inference_graph.pb"
 #FROZEN_SSD_MOBILENET = "ssd_mobilenet_v1_coco_exported/frozen_inference_graph.pb"
 
@@ -128,7 +117,6 @@ def run_inference():
                 'num_detections:0')
 
             tope = 10
-<<<<<<< HEAD
             new = True
             VIOLATION_ARR = []
             while(cap.isOpened()):
@@ -138,15 +126,6 @@ def run_inference():
 
                 if ret == True:
                     violation = 0
-=======
-            limit = 0
-            new = True
-            while(cap.isOpened()):
-                # Capture frame-by-frame
-                ret, frame = cap.read()
-
-                if ret == True:
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
                     # Correct color
                     frame = gray = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                     operations = tf.get_default_graph().get_operations()
@@ -247,10 +226,7 @@ def run_inference():
                             dy = middle[1] + dy*10
 
                         if average_distance < 2:
-<<<<<<< HEAD
                             violation = violation + 1
-=======
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
                             axis.annotate((round(average_distance, 2)), xy=middle, color='white', xytext=(
                                 dx, dy), fontsize=10, bbox=dict(facecolor='red', edgecolor='white', boxstyle='round', pad=0.2), zorder=30)
                             axis.plot((x1, x2), (y1, y2), linewidth=2,
@@ -258,21 +234,8 @@ def run_inference():
                         else:
                             pass
 
-<<<<<<< HEAD
+                    axis.imshow(frame, interpolation='nearest')
                     VIOLATION_ARR.append([frame_number, violation])
-                    with open('timeline_data.txt', 'w') as writeFile:
-                        for f,v in VIOLATION_ARR:
-                            writeFile.write(str(f).split(".")[0] + "," + str(v) + "\n")
-
-                    axis.imshow(frame, interpolation='nearest')
-                    
-
-                    fig.canvas.draw()  # Convert figure to numpy
-
-                    img = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-                    img = img.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-=======
-                    axis.imshow(frame, interpolation='nearest')
 
                     fig.canvas.draw()  # Convert figure to numpy
 
@@ -280,22 +243,16 @@ def run_inference():
                         fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
                     img = img.reshape(
                         fig.canvas.get_width_height()[::-1] + (3,))
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
 
                     img = np.array(fig.canvas.get_renderer()._renderer)
                     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
                     # Display frames continuosly until 'esc' button has been pressed
                     cv2.imshow('LIVE', img)
-<<<<<<< HEAD
                     show_line_chart(VIOLATION_ARR)
                     key = cv2.waitKey(1)
 
                     
-=======
-                    key = cv2.waitKey(1)
-
->>>>>>> c13409ff661ecc6160293e2550b4769eb7088735
                     # Press esc key to stop the real time video
                     if(key == 27):
                         break
