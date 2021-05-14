@@ -29,11 +29,14 @@ class UIFunctions(QMainWindow):
             
     def uploadImage(self, frozen_path):
         imagePath = QFileDialog.getOpenFileName()
-        qimage = ImageQt(predict_photo(frozen_path, imagePath[0]))
+        img, centroids, coordinates = predict_photo(frozen_path, imagePath[0])
+
+        #Turn this on to get the distance detection
+        #qimage = ImageQt(img)
 
 
-        #   !!! NEED TO EDIT THIS LATER ON !!!
-        #qimage = ImageQt(mask_area(frozen_path, imagePath[0]))
+        # Turn this one to get the masked photo
+        qimage = ImageQt(mask_area(centroids, coordinates, imagePath[0]))
         
 
         pixmap = QtGui.QPixmap.fromImage(qimage)

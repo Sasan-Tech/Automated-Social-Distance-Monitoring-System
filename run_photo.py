@@ -197,5 +197,5 @@ def predict_photo(frozen_graph, image):
   plt.savefig(buf)
   buf.seek(0)
   img = Image.open(buf)
-  return img
+  return img, centroids, coordinates
 #============================================================================================================================
