@@ -31,29 +31,40 @@ class MainWindow(QMainWindow):
         ## TOGGLE/BURGUER MENU
         ########################################################################
         self.ui.Btn_Toggle.clicked.connect(lambda: UIFunctions.toggleMenu(self, 250, True))
-
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        frozen_path = "exported/rfcn_exported/frozen_inference_graph.pb"
-
-        # Add other paths
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        self.ui.ImageButton.clicked.connect(lambda: UIFunctions.uploadImage(self, frozen_path))
-
+    
         ## PAGES
         ########################################################################
 
         # PAGE 1
-        #self.ui.btn_page_1.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_1))
         self.ui.Btn_Menu_1.clicked.connect(lambda: self.ui.Pages_Widget.setCurrentWidget(self.ui.page))
 
         # PAGE 2
-        #self.ui.btn_page_2.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_2))
         self.ui.Btn_Menu_2.clicked.connect(lambda: self.ui.Pages_Widget.setCurrentWidget(self.ui.page_2))
-        # PAGE 3
-        #self.ui.btn_page_3.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.page_3))
-
         
+        # PAGE 3
+        self.ui.Btn_Menu_3.clicked.connect(lambda: self.ui.Pages_Widget.setCurrentWidget(self.ui.page_3))
+        
+        
+        ### MODEL PATH ###
+        rfcn_frozen_path = "exported/rfcn_exported/frozen_inference_graph.pb"
+        ssd_inception_frozen_path = "exported/ssd_inception_exported/frozen_inference_graph.pb"
+        ssd_mobilenet_v1_coco_frozen_path = "" # Waiting for George
+        
+        ### IMAGE SECTION ###
+        self.ui.analyze_image_button.setEnabled(False)
+        self.ui.model_1.setEnabled(False)
+        self.ui.model_2.setEnabled(False)
+        self.ui.model_3.setEnabled(False)
+        
+        
+        self.ui.upload_image_button.clicked.connect(lambda: UIFunctions.uploadImage(self, rfcn_frozen_path))
+        self.ui.model_1.clicked.connect(lambda: UIFunctions.loadModelForImage(self, ssd_inception_frozen_path))
+        self.ui.model_2.clicked.connect(lambda: UIFunctions.loadModelForImage(self, rfcn_frozen_path))
+        #self.ui.model_3.clicked.connect(lambda: UIFunctions.loadModelForImage(self, ssd_mobilenet_v1_coco_frozen_path))
+        
+        self.ui.analyze_image_button.clicked.connect(lambda: UIFunctions.maskingForImage(self))
+
         ### VIDEO SECTION ###
         self.media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
 
@@ -75,6 +86,21 @@ class MainWindow(QMainWindow):
         self.media.stateChanged.connect(lambda: UIFunctions.stateChanged(self))
         self.media.positionChanged.connect(lambda: UIFunctions.positionChanged(self, self.ui.video_slider.sliderPosition()))
         self.media.durationChanged.connect(lambda: UIFunctions.durationChanged(self, self.media.duration()))
+        
+        
+        ### ANALYZE SECTION ###
+        self.analyze_media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        
+        analyzeVideo = QVideoWidget()
+        
+        vAnalyzedBox = QVBoxLayout()
+        vAnalyzedBox.addWidget(analyzeVideo)
+        self.ui.analyze_video_container.setLayout(vAnalyzedBox)
+        
+        self.ui.analyze_upload_video_button.clicked.connect(lambda: UIFunctions.loadVideoAnalyzedSection(self))
+        
+        self.analyze_media.setVideoOutput(analyzeVideo)
+        
         
 
         ## SHOW ==> MAIN WINDOW

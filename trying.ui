@@ -432,14 +432,26 @@ QPushButton:hover {
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="result_image">
+                  <widget class="QLabel" name="default_image">
+                   <property name="maximumSize">
+                    <size>
+                     <width>768</width>
+                     <height>432</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="default_image">
+                  <widget class="QLabel" name="result_image">
+                   <property name="maximumSize">
+                    <size>
+                     <width>768</width>
+                     <height>432</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -465,6 +477,12 @@ QPushButton:hover {
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <item>
                   <widget class="QLabel" name="centroid_image_result">
+                   <property name="maximumSize">
+                    <size>
+                     <width>768</width>
+                     <height>432</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string/>
                    </property>
@@ -478,7 +496,7 @@ QPushButton:hover {
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>200</height>
+                  <height>150</height>
                  </size>
                 </property>
                 <property name="frameShape">
@@ -561,7 +579,7 @@ QPushButton:hover {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_2">
+                     <widget class="QPushButton" name="analyze_image_button">
                       <property name="maximumSize">
                        <size>
                         <width>500</width>
@@ -618,7 +636,7 @@ QPushButton:hover {
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QPushButton" name="model_2">
+                     <widget class="QPushButton" name="model_1">
                       <property name="maximumSize">
                        <size>
                         <width>400</width>
@@ -650,7 +668,7 @@ QPushButton:hover {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="model_1">
+                     <widget class="QPushButton" name="model_2">
                       <property name="maximumSize">
                        <size>
                         <width>400</width>
@@ -898,11 +916,7 @@ QPushButton:hover {
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
                  <item>
-                  <widget class="QLabel" name="analyze_default_video">
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
+                  <widget class="QWidget" name="analyze_video_container" native="true"/>
                  </item>
                  <item>
                   <widget class="QLabel" name="analyze_line_graph_video">
@@ -926,7 +940,7 @@ QPushButton:hover {
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>200</height>
+                  <height>150</height>
                  </size>
                 </property>
                 <property name="frameShape">

@@ -194,15 +194,17 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setSpacing(0)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.result_image = QLabel(self.frame_images)
-        self.result_image.setObjectName(u"result_image")
-
-        self.horizontalLayout_6.addWidget(self.result_image)
-
         self.default_image = QLabel(self.frame_images)
         self.default_image.setObjectName(u"default_image")
+        self.default_image.setMaximumSize(QSize(768, 432))
 
         self.horizontalLayout_6.addWidget(self.default_image)
+
+        self.result_image = QLabel(self.frame_images)
+        self.result_image.setObjectName(u"result_image")
+        self.result_image.setMaximumSize(QSize(768, 432))
+
+        self.horizontalLayout_6.addWidget(self.result_image)
 
 
         self.verticalLayout_6.addWidget(self.frame_images)
@@ -216,6 +218,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.centroid_image_result = QLabel(self.extension_image_result_section)
         self.centroid_image_result.setObjectName(u"centroid_image_result")
+        self.centroid_image_result.setMaximumSize(QSize(768, 432))
 
         self.horizontalLayout_8.addWidget(self.centroid_image_result)
 
@@ -224,7 +227,7 @@ class Ui_MainWindow(object):
 
         self.button_section = QFrame(self.page)
         self.button_section.setObjectName(u"button_section")
-        self.button_section.setMaximumSize(QSize(16777215, 200))
+        self.button_section.setMaximumSize(QSize(16777215, 150))
         self.button_section.setFrameShape(QFrame.NoFrame)
         self.button_section.setFrameShadow(QFrame.Raised)
         self.verticalLayout_8 = QVBoxLayout(self.button_section)
@@ -261,11 +264,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7.addWidget(self.upload_image_button)
 
-        self.pushButton_2 = QPushButton(self.upload_image_section)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setMaximumSize(QSize(500, 50))
-        self.pushButton_2.setFont(font3)
-        self.pushButton_2.setStyleSheet(u"QPushButton {\n"
+        self.analyze_image_button = QPushButton(self.upload_image_section)
+        self.analyze_image_button.setObjectName(u"analyze_image_button")
+        self.analyze_image_button.setMaximumSize(QSize(500, 50))
+        self.analyze_image_button.setFont(font3)
+        self.analyze_image_button.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgb(35, 35, 35);\n"
 "	border: 1px solid;\n"
@@ -276,7 +279,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
 
-        self.horizontalLayout_7.addWidget(self.pushButton_2)
+        self.horizontalLayout_7.addWidget(self.analyze_image_button)
 
 
         self.verticalLayout_8.addWidget(self.upload_image_section)
@@ -288,34 +291,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3 = QHBoxLayout(self.model_button_section)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.model_2 = QPushButton(self.model_button_section)
-        self.model_2.setObjectName(u"model_2")
-        self.model_2.setMaximumSize(QSize(400, 40))
+        self.model_1 = QPushButton(self.model_button_section)
+        self.model_1.setObjectName(u"model_1")
+        self.model_1.setMaximumSize(QSize(400, 40))
         font4 = QFont()
         font4.setFamily(u"Montserrat")
         font4.setBold(True)
         font4.setWeight(75)
-        self.model_2.setFont(font4)
-        self.model_2.setStyleSheet(u"QPushButton {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(35, 35, 35);\n"
-"	border: 1px solid;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(85, 170, 255);\n"
-"}\n"
-"")
-
-        self.horizontalLayout_3.addWidget(self.model_2)
-
-        self.model_1 = QPushButton(self.model_button_section)
-        self.model_1.setObjectName(u"model_1")
-        self.model_1.setMaximumSize(QSize(400, 40))
-        font5 = QFont()
-        font5.setBold(True)
-        font5.setWeight(75)
-        self.model_1.setFont(font5)
+        self.model_1.setFont(font4)
         self.model_1.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgb(35, 35, 35);\n"
@@ -328,6 +311,26 @@ class Ui_MainWindow(object):
 "")
 
         self.horizontalLayout_3.addWidget(self.model_1)
+
+        self.model_2 = QPushButton(self.model_button_section)
+        self.model_2.setObjectName(u"model_2")
+        self.model_2.setMaximumSize(QSize(400, 40))
+        font5 = QFont()
+        font5.setBold(True)
+        font5.setWeight(75)
+        self.model_2.setFont(font5)
+        self.model_2.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(35, 35, 35);\n"
+"	border: 1px solid;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(85, 170, 255);\n"
+"}\n"
+"")
+
+        self.horizontalLayout_3.addWidget(self.model_2)
 
         self.model_3 = QPushButton(self.model_button_section)
         self.model_3.setObjectName(u"model_3")
@@ -441,10 +444,10 @@ class Ui_MainWindow(object):
         self.analyze_video_result_section.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_9 = QHBoxLayout(self.analyze_video_result_section)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.analyze_default_video = QLabel(self.analyze_video_result_section)
-        self.analyze_default_video.setObjectName(u"analyze_default_video")
+        self.analyze_video_container = QWidget(self.analyze_video_result_section)
+        self.analyze_video_container.setObjectName(u"analyze_video_container")
 
-        self.horizontalLayout_9.addWidget(self.analyze_default_video)
+        self.horizontalLayout_9.addWidget(self.analyze_video_container)
 
         self.analyze_line_graph_video = QLabel(self.analyze_video_result_section)
         self.analyze_line_graph_video.setObjectName(u"analyze_line_graph_video")
@@ -461,7 +464,7 @@ class Ui_MainWindow(object):
 
         self.analyze_button_section = QFrame(self.page_3)
         self.analyze_button_section.setObjectName(u"analyze_button_section")
-        self.analyze_button_section.setMaximumSize(QSize(16777215, 200))
+        self.analyze_button_section.setMaximumSize(QSize(16777215, 150))
         self.analyze_button_section.setFrameShape(QFrame.NoFrame)
         self.analyze_button_section.setFrameShadow(QFrame.Raised)
         self.verticalLayout_10 = QVBoxLayout(self.analyze_button_section)
@@ -590,17 +593,16 @@ class Ui_MainWindow(object):
         self.Btn_Menu_1.setText(QCoreApplication.translate("MainWindow", u"Image", None))
         self.Btn_Menu_2.setText(QCoreApplication.translate("MainWindow", u"Video", None))
         self.Btn_Menu_3.setText(QCoreApplication.translate("MainWindow", u"Analyze", None))
-        self.result_image.setText("")
         self.default_image.setText("")
+        self.result_image.setText("")
         self.centroid_image_result.setText("")
         self.upload_image_button.setText(QCoreApplication.translate("MainWindow", u"Upload Image", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Analyze", None))
-        self.model_2.setText(QCoreApplication.translate("MainWindow", u"SSD Inception", None))
-        self.model_1.setText(QCoreApplication.translate("MainWindow", u"RFCN", None))
+        self.analyze_image_button.setText(QCoreApplication.translate("MainWindow", u"Analyze", None))
+        self.model_1.setText(QCoreApplication.translate("MainWindow", u"SSD Inception", None))
+        self.model_2.setText(QCoreApplication.translate("MainWindow", u"RFCN", None))
         self.model_3.setText(QCoreApplication.translate("MainWindow", u"SSD Mobilenet", None))
         self.play_button.setText("")
         self.VideoButton.setText(QCoreApplication.translate("MainWindow", u"Upload Video", None))
-        self.analyze_default_video.setText("")
         self.analyze_line_graph_video.setText("")
         self.analyze_masking_video.setText("")
         self.analyze_upload_video_button.setText(QCoreApplication.translate("MainWindow", u"Upload Video", None))

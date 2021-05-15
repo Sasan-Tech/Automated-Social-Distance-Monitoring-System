@@ -28,20 +28,65 @@ class UIFunctions(QMainWindow):
             self.animation.start()
             
     def uploadImage(self, frozen_path):
+        global image, IMG_WIDTH, IMG_HEIGHT
         imagePath = QFileDialog.getOpenFileName()
-        img, centroids, coordinates = predict_photo(frozen_path, imagePath[0])
-
-        #Turn this on to get the distance detection
-        #qimage = ImageQt(img)
-
-
-        # Turn this one to get the masked photo
-        qimage = ImageQt(mask_area(centroids, coordinates, imagePath[0]))
+        IMG_WIDTH = 768
+        IMG_HEIGHT = 432
         
+        if not (imagePath[0] == ""):
+            image = imagePath[0]
+            #img, centroids, coordinates = predict_photo(frozen_path, imagePath[0])
+            
+            self.ui.model_1.setEnabled(True)
+            self.ui.model_2.setEnabled(True)
+            self.ui.model_3.setEnabled(True)
+            
+            
+            
+            
+            pixmap = QPixmap(imagePath[0])
+            resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+            self.ui.default_image.setPixmap(resize_pixmap)
+            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())
 
+            #Turn this on to get the distance detection
+            #qimage = ImageQt(img)
+
+
+            # Turn this one to get the masked photo
+            #qimage = ImageQt(mask_area(centroids, coordinates, imagePath[0]))
+            
+
+            #pixmap = QtGui.QPixmap.fromImage(qimage)
+            #self.ui.image_label.setPixmap(pixmap)
+            #self.ui.image_label.resize(pixmap.width(), pixmap.height())        
+        else:
+            self.ui.analyze_image_button.setEnabled(False)
+            self.ui.model_1.setEnabled(False)
+            self.ui.model_2.setEnabled(False)
+            self.ui.model_3.setEnabled(False)
+        
+        
+    def loadModelForImage(self, frozen_path):
+        global img, centroids, coordinates
+        img, centroids, coordinates = predict_photo(frozen_path, image)
+        qimage = ImageQt(img)
+        
         pixmap = QtGui.QPixmap.fromImage(qimage)
-        self.ui.image_label.setPixmap(pixmap)
-        self.ui.image_label.resize(pixmap.width(), pixmap.height())        
+        resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+        
+        self.ui.result_image.setPixmap(resize_pixmap)
+        self.ui.result_image.resize(resize_pixmap.width(), resize_pixmap.height())    
+        self.ui.analyze_image_button.setEnabled(True) 
+        
+    def maskingForImage(self):
+        qimage = ImageQt(mask_area(centroids, coordinates, image))
+        
+        pixmap = QtGui.QPixmap.fromImage(qimage)
+        resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+        
+        self.ui.centroid_image_result.setPixmap(resize_pixmap)
+        self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height()) 
         
     def loadVideo(self):
         fileName = QFileDialog.getOpenFileName()
@@ -76,3 +121,11 @@ class UIFunctions(QMainWindow):
             
     def setVideoPosition(self, position):
         self.media.setPosition(position)
+        
+        
+    def loadVideoAnalyzedSection(self):
+        fileName = QFileDialog.getOpenFileName()
+        
+        if fileName[0] != "":
+            self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
+            self.analyze_media.play()    
