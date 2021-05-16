@@ -1,6 +1,8 @@
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ===================================== Importing Libraries =======================================================
+from analyse_area import *
+from analyse_timeline import *
 from numba import jit, cuda
 from object_detection.utils import ops as utils_ops
 from PIL import Image
@@ -19,6 +21,9 @@ import math
 import random
 import cv2
 import tensorflow.compat.v1 as tf
+import tempfile
+import os
+import shutil
 tf.disable_v2_behavior()
 
 import tempfile
@@ -26,8 +31,6 @@ import tempfile
 
 matplotlib.use('TkAgg')
 
-from analyse_timeline import *
-from analyse_area import *
 
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +51,7 @@ def predict_video(frozen_graph, video):
     height = int(cap.get(4))
     dim = (width, height)
 
-
+    FILE_OUTPUT = 'temp/tempVideo.avi'
 
     # =================================================================================================================
     # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -250,18 +253,22 @@ def predict_video(frozen_graph, video):
                         img = np.array(fig.canvas.get_renderer()._renderer)
                         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
-                        # Display frames continuosly until 'esc' button has been pressed
-                        cv2.imshow('LIVE', img)
-                        show_line_chart(VIOLATION_ARR)
-                        key = cv2.waitKey(1)
+                        if new:
+                            print("Define out")
+                            out = cv2.VideoWriter(FILE_OUTPUT, cv2.VideoWriter_fourcc(
+                                *'XVID'), 20.0, (img.shape[1], img.shape[0]))
+                            new = False
 
-                        
-                        # Press esc key to stop the real time video
-                        if(key == 27):
-                            break
-                    
-                    # <<< Call the analyse area >>>
-                return frame
+                        out.write(img)
+
+                    else:
+                        break
+
+
+            cap.release()
+            out.release()             
+                   
+            return frame
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ======================== Run the program. Press 'esc' key on your keyboard to stop. =============================
