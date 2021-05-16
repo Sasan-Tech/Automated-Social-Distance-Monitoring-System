@@ -7,6 +7,7 @@ from PIL.ImageQt import ImageQt
 
 from run_photo import *
 from analyse_area import *
+from run_video import *
 
 class UIFunctions(QMainWindow):
 
@@ -77,7 +78,7 @@ class UIFunctions(QMainWindow):
 
         if fileName[0] != "":
             # Call the predict video
-
+            img, ALL_CENTROIDS, ALL_COORDINATES, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
             
             #Load the saved video
             self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.mp4")))
