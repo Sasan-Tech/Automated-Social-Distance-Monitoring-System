@@ -8,6 +8,7 @@ from PIL.ImageQt import ImageQt
 from run_photo import *
 from analyse_area import *
 from run_video import *
+from analyse_timeline import *
 
 class UIFunctions(QMainWindow):
 
@@ -105,3 +106,39 @@ class UIFunctions(QMainWindow):
         self.ui.result_image.clear()
         self.ui.centroid_image_result.clear()
 
+
+
+''' For Replay
+
+self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
+self.media.play()  
+
+
+
+'''
+
+''' For masking, the image is taken from the one that has been returned from the video analysis
+
+qimage = ImageQt(mask_area(centroids, coordinates, image))
+        
+pixmap = QtGui.QPixmap.fromImage(qimage)
+resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+
+self.ui.centroid_image_result.setPixmap(resize_pixmap)
+self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height())
+
+
+'''
+
+''' For timeline
+
+qimage = ImageQt(show_line_chart(VIOLATION_ARR))
+        
+pixmap = QtGui.QPixmap.fromImage(qimage)
+resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+
+self.ui.centroid_image_result.setPixmap(resize_pixmap)
+self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height())
+
+
+'''

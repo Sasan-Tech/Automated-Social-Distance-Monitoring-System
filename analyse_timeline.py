@@ -7,6 +7,7 @@ import matplotlib
 import math
 import random
 import cv2
+import io
 
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
@@ -46,6 +47,9 @@ def show_line_chart(VIOLATION_ARR):
     plt.tick_params(axis='both', labelsize=8)
 
 
-    plt.show(block=False)
-    plt.pause(1)
-    plt.close(1)
+    buf = io.BytesIO()
+    plt.tight_layout()
+    plt.savefig(buf)
+    buf.seek(0)
+    img = Image.open(buf)
+    return img
