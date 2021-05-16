@@ -37,13 +37,13 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         # PAGE 1
-        self.ui.Btn_Menu_1.clicked.connect(lambda: self.ui.Pages_Widget.setCurrentWidget(self.ui.page))
+        self.ui.Btn_Menu_1.clicked.connect(lambda: UIFunctions.page1(self))
 
         # PAGE 2
-        self.ui.Btn_Menu_2.clicked.connect(lambda: self.ui.Pages_Widget.setCurrentWidget(self.ui.page_2))
+        self.ui.Btn_Menu_2.clicked.connect(lambda: UIFunctions.page2(self))
         
         # PAGE 3
-        self.ui.Btn_Menu_3.clicked.connect(lambda: self.ui.Pages_Widget.setCurrentWidget(self.ui.page_3))
+        self.ui.Btn_Menu_3.clicked.connect(lambda: UIFunctions.page3(self))
         
         
         ### MODEL PATH ###
@@ -76,18 +76,9 @@ class MainWindow(QMainWindow):
         
         self.ui.VideoButton.clicked.connect(lambda: UIFunctions.loadVideo(self))
         
-        self.ui.play_button.setEnabled(False)
-        self.ui.play_button.clicked.connect(lambda: UIFunctions.playVideo(self))
-        
-        self.ui.video_slider.setRange(0, 0)
-        self.ui.video_slider.sliderMoved.connect(lambda: UIFunctions.setVideoPosition(self, self.ui.video_slider.sliderPosition()))
-        
         self.media.setVideoOutput(video)
-        self.media.stateChanged.connect(lambda: UIFunctions.stateChanged(self))
-        self.media.positionChanged.connect(lambda: UIFunctions.positionChanged(self, self.ui.video_slider.sliderPosition()))
-        self.media.durationChanged.connect(lambda: UIFunctions.durationChanged(self, self.media.duration()))
         
-        
+
         ### ANALYZE SECTION ###
         self.analyze_media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         
