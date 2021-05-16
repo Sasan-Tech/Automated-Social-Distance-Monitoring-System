@@ -49,7 +49,7 @@ class MainWindow(QMainWindow):
         ### MODEL PATH ###
         rfcn_frozen_path = "exported/rfcn_exported/frozen_inference_graph.pb"
         ssd_inception_frozen_path = "exported/ssd_inception_exported/frozen_inference_graph.pb"
-        ssd_mobilenet_v1_coco_frozen_path = "" # Waiting for George
+        ssd_mobilenet_v1_coco_frozen_path = "exported/ssd_mobilenet_v1_coco_exported/frozen_inference_graph.pb"
         
         ### IMAGE SECTION ###
         self.ui.analyze_image_button.setEnabled(False)
@@ -61,7 +61,7 @@ class MainWindow(QMainWindow):
         self.ui.upload_image_button.clicked.connect(lambda: UIFunctions.uploadImage(self, rfcn_frozen_path))
         self.ui.model_1.clicked.connect(lambda: UIFunctions.loadModelForImage(self, ssd_inception_frozen_path))
         self.ui.model_2.clicked.connect(lambda: UIFunctions.loadModelForImage(self, rfcn_frozen_path))
-        #self.ui.model_3.clicked.connect(lambda: UIFunctions.loadModelForImage(self, ssd_mobilenet_v1_coco_frozen_path))
+        self.ui.model_3.clicked.connect(lambda: UIFunctions.loadModelForImage(self, ssd_mobilenet_v1_coco_frozen_path))
         
         self.ui.analyze_image_button.clicked.connect(lambda: UIFunctions.maskingForImage(self))
 
