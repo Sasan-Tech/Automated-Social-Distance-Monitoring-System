@@ -76,7 +76,11 @@ class UIFunctions(QMainWindow):
         fileName = QFileDialog.getOpenFileName()
         
         if fileName[0] != "":
-            self.media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
+            # Call the predict video
+
+            
+            #Load the saved video
+            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.mp4")))
             self.ui.play_button.setEnabled(True)
         
     def stateChanged(self):
