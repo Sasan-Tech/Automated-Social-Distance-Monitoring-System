@@ -68,7 +68,11 @@ class MainWindow(QMainWindow):
         ### VIDEO SECTION ###
         self.media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.ui.ReplayButton.setEnabled(False)
-
+        
+        self.ui.video_section_model1.clicked.connect(lambda: UIFunctions.loadModelVideoSection(self, ssd_inception_frozen_path))
+        self.ui.video_section_model2.clicked.connect(lambda: UIFunctions.loadModelVideoSection(self, rfcn_frozen_path))
+        self.ui.video_section_model3.clicked.connect(lambda: UIFunctions.loadModelVideoSection(self, ssd_mobilenet_v1_coco_frozen_path))
+        
         video = QVideoWidget()
         
         vBox = QVBoxLayout()

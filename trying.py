@@ -401,30 +401,60 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.video_section_model1 = QtWidgets.QPushButton(self.models_video_section)
+        self.video_section_model1.setMaximumSize(QtCore.QSize(16777215, 40))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setBold(True)
         font.setWeight(75)
         self.video_section_model1.setFont(font)
-        self.video_section_model1.setStyleSheet("color: white;")
+        self.video_section_model1.setStyleSheet("QPushButton {\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    border: 1px solid;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(85, 170, 255);\n"
+"}\n"
+"")
         self.video_section_model1.setObjectName("video_section_model1")
         self.horizontalLayout_4.addWidget(self.video_section_model1)
         self.video_section_model2 = QtWidgets.QPushButton(self.models_video_section)
+        self.video_section_model2.setMaximumSize(QtCore.QSize(16777215, 40))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setBold(True)
         font.setWeight(75)
         self.video_section_model2.setFont(font)
-        self.video_section_model2.setStyleSheet("color: white;")
+        self.video_section_model2.setStyleSheet("QPushButton {\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    border: 1px solid;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(85, 170, 255);\n"
+"}\n"
+"")
         self.video_section_model2.setObjectName("video_section_model2")
         self.horizontalLayout_4.addWidget(self.video_section_model2)
         self.video_section_model3 = QtWidgets.QPushButton(self.models_video_section)
+        self.video_section_model3.setMaximumSize(QtCore.QSize(16777215, 40))
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setBold(True)
         font.setWeight(75)
         self.video_section_model3.setFont(font)
-        self.video_section_model3.setStyleSheet("color: white;")
+        self.video_section_model3.setStyleSheet("QPushButton {\n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: rgb(35, 35, 35);\n"
+"    border: 1px solid;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(85, 170, 255);\n"
+"}\n"
+"")
         self.video_section_model3.setObjectName("video_section_model3")
         self.horizontalLayout_4.addWidget(self.video_section_model3)
         self.verticalLayout_11.addWidget(self.models_video_section)

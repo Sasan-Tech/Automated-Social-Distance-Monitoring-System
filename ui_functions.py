@@ -10,7 +10,10 @@ from analyse_area import *
 from run_video import *
 
 class UIFunctions(QMainWindow):
-
+    
+    ####################
+    ### MENU SECTION ###
+    ####################
     def toggleMenu(self, maxWidth, enable):
         if enable:
             width = self.ui.frame_left_menu.width()
@@ -27,7 +30,11 @@ class UIFunctions(QMainWindow):
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
             self.animation.start()
-            
+    
+    
+    #####################
+    ### IMAGE SECTION ###
+    #####################
     def uploadImage(self, frozen_path):
         global image, IMG_WIDTH, IMG_HEIGHT
         imagePath = QFileDialog.getOpenFileName()
@@ -51,7 +58,6 @@ class UIFunctions(QMainWindow):
             self.ui.model_2.setEnabled(False)
             self.ui.model_3.setEnabled(False)
         
-        
     def loadModelForImage(self, frozen_path):
         global img, centroids, coordinates
         img, centroids, coordinates = predict_photo(frozen_path, image)
@@ -73,17 +79,31 @@ class UIFunctions(QMainWindow):
         self.ui.centroid_image_result.setPixmap(resize_pixmap)
         self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height()) 
         
+        
+    #####################
+    ### VIDEO SECTION ###
+    #####################    
+        
     def loadVideo(self):
         fileName = QFileDialog.getOpenFileName()
 
         if fileName[0] != "":
+            self.videoLink = fileName[0]
             # Call the predict video
-            img, ALL_CENTROIDS, ALL_COORDINATES, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
             self.ui.ReplayButton.setEnabled(True)
-            print("Done process video")
-            #Load the saved video
-            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
-            self.media.play()    
+            print("Done upload video")    
+            
+
+    def loadModelVideoSection(self, frozen_graph):
+        self.media.setMedia(QMediaContent())
+        _, _, _, _ = predict_video(frozen_graph, self.videoLink)
+        self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
+        self.media.play()   
+        
+                 
+    #######################
+    ### ANALYZE SECTION ###
+    ####################### 
             
     def loadVideoAnalyzedSection(self):
         fileName = QFileDialog.getOpenFileName()
@@ -91,7 +111,11 @@ class UIFunctions(QMainWindow):
         if fileName[0] != "":
             self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
             self.analyze_media.play()    
-            
+    
+    
+    ##########################
+    ### NAVIGATION SECTION ###
+    ##########################       
               
     def page1(self):
         self.ui.Pages_Widget.setCurrentWidget(self.ui.page)
