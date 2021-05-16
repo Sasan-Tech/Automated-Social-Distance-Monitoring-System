@@ -93,39 +93,32 @@ class UIFunctions(QMainWindow):
         
         if fileName[0] != "":
             self.media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
-            self.ui.play_button.setEnabled(True)
-        
-    def stateChanged(self):
-        if self.media.state() == QMediaPlayer.PlayingState:
-            pause_icon = QtGui.QIcon()
-            pause_icon.addPixmap(QtGui.QPixmap("images/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            self.ui.play_button.setIcon(pause_icon)
-            
-        else:
-            play_icon = QtGui.QIcon()
-            play_icon.addPixmap(QtGui.QPixmap("images/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            self.ui.play_button.setIcon(play_icon)
-            
-    def positionChanged(self, position):
-        self.ui.video_slider.setValue(position)
-        
-    
-    def durationChanged(self, duration):
-        self.ui.video_slider.setRange(0, duration)
-        
-    def playVideo(self):
-        if self.media.state() == QMediaPlayer.PlayingState:
-            self.media.pause()
-        else:
-            self.media.play()
-            
-    def setVideoPosition(self, position):
-        self.media.setPosition(position)
-        
-        
+            self.analyze_media.play()  
+          
     def loadVideoAnalyzedSection(self):
         fileName = QFileDialog.getOpenFileName()
         
         if fileName[0] != "":
             self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
             self.analyze_media.play()    
+            
+              
+    def page1(self):
+        self.ui.Pages_Widget.setCurrentWidget(self.ui.page)
+        
+    def page2(self):
+        self.ui.Pages_Widget.setCurrentWidget(self.ui.page_2)
+        
+        # Clearing Image section content
+        self.ui.default_image.clear()
+        self.ui.result_image.clear()
+        self.ui.centroid_image_result.clear()
+        
+    def page3(self):
+        self.ui.Pages_Widget.setCurrentWidget(self.ui.page_3)
+        
+        # Clearing Image section content
+        self.ui.default_image.clear()
+        self.ui.result_image.clear()
+        self.ui.centroid_image_result.clear()
+
