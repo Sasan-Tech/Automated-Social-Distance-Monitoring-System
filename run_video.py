@@ -1,6 +1,8 @@
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ===================================== Importing Libraries =======================================================
+from analyse_area import *
+from analyse_timeline import *
 from numba import jit, cuda
 from object_detection.utils import ops as utils_ops
 from PIL import Image
@@ -19,13 +21,14 @@ import math
 import random
 import cv2
 import tensorflow.compat.v1 as tf
+import tempfile
+import os
+import shutil
 tf.disable_v2_behavior()
 
 
 matplotlib.use('TkAgg')
 
-from analyse_timeline import *
-from analyse_area import *
 
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +37,8 @@ IMAGE_OUTPUT_SIZE = (12, 8)
 SAFE_DISTANCE = 100  # in pixels
 
 # Frozen Graph of trained models (rfcn_resnet101_coco_2018_01_28, ssd_enceptionv2, ssd_mobilenet_v1_coco_2018_01_28)
-FROZEN_RFCN_GRAPH = "exported/rfcn_exported/frozen_inference_graph.pb"  # define the model path here
+# define the model path here
+FROZEN_RFCN_GRAPH = "exported/rfcn_exported/frozen_inference_graph.pb"
 #FROZEN_SSD_INCEPTION_GRAPH = "ssd_inception_exported/frozen_inference_graph.pb"
 #FROZEN_SSD_MOBILENET = "ssd_mobilenet_v1_coco_exported/frozen_inference_graph.pb"
 
@@ -42,7 +46,10 @@ frozen_graph = FROZEN_RFCN_GRAPH  # define the chosen model
 # define the label_map.pbtxt path here
 label_map = label_map_util.load_labelmap("label_map.pbtxt")
 
-cap = cv2.VideoCapture('TownCentreXVID.mp4')  # define the video path here
+# define the video path here
+cap = cv2.VideoCapture('TownCentreXVID.mp4')
+
+FILE_OUTPUT = 'temp/tempVideo.avi'
 
 width = int(cap.get(3))
 height = int(cap.get(4))
@@ -98,6 +105,8 @@ def calculate_permutation(centroids):
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ================ Predicting person objects in each frame and displaying it as a real time video =================
+
+
 def run_inference():
     with detection_graph.as_default():
         with tf.Session() as sess:
@@ -196,7 +205,7 @@ def run_inference():
                         axis.add_patch(matplotlib.patches.Circle(
                             (centroid[0], centroid[1]), 3, color='yellow', zorder=20))
 
-                        #Add the centroids for the area analysis    
+                        # Add the centroids for the area analysis
                         ALL_CENTROIDS.append(centroid)
 
                     # Display lines between centroids
@@ -253,19 +262,35 @@ def run_inference():
                     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
                     # Display frames continuosly until 'esc' button has been pressed
-                    cv2.imshow('LIVE', img)
-                    show_line_chart(VIOLATION_ARR)
-                    key = cv2.waitKey(1)
+                    # cv2.imshow('LIVE', img)
+                    # show_line_chart(VIOLATION_ARR)
+                    # key = cv2.waitKey(1)
 
-                    
+                    if new:
+                        print("Define out")
+                        out = cv2.VideoWriter(FILE_OUTPUT, cv2.VideoWriter_fourcc(
+                            *'XVID'), 20.0, (img.shape[1], img.shape[0]))
+                        new = False
+
+                    out.write(img)
+
+                else:
+                    break
+
                     # Press esc key to stop the real time video
-                    if(key == 27):
-                        break
-                
+                    # if(key == 27):
+                    # break
+
                 # <<< Call the analyse area >>>
 
+        cap.release()
+        out.release()
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ======================== Run the program. Press 'esc' key on your keyboard to stop. =============================
+
+ # When everything done, release the video capture and video write objects
+
+
 run_inference()
 cv2.destroyAllWindows()
