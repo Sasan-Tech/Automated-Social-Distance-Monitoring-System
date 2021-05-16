@@ -67,6 +67,7 @@ class MainWindow(QMainWindow):
 
         ### VIDEO SECTION ###
         self.media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.ui.ReplayButton.setEnabled(False)
 
         video = QVideoWidget()
         
@@ -77,6 +78,8 @@ class MainWindow(QMainWindow):
         self.ui.VideoButton.clicked.connect(lambda: UIFunctions.loadVideo(self))
         
         self.media.setVideoOutput(video)
+        
+        self.ui.ReplayButton.clicked.connect(lambda: self.media.play())
         
 
         ### ANALYZE SECTION ###
