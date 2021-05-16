@@ -35,31 +35,15 @@ class UIFunctions(QMainWindow):
         
         if not (imagePath[0] == ""):
             image = imagePath[0]
-            #img, centroids, coordinates = predict_photo(frozen_path, imagePath[0])
             
             self.ui.model_1.setEnabled(True)
             self.ui.model_2.setEnabled(True)
             self.ui.model_3.setEnabled(True)
-            
-            
-            
-            
+                       
             pixmap = QPixmap(imagePath[0])
             resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
             self.ui.default_image.setPixmap(resize_pixmap)
-            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())
-
-            #Turn this on to get the distance detection
-            #qimage = ImageQt(img)
-
-
-            # Turn this one to get the masked photo
-            #qimage = ImageQt(mask_area(centroids, coordinates, imagePath[0]))
-            
-
-            #pixmap = QtGui.QPixmap.fromImage(qimage)
-            #self.ui.image_label.setPixmap(pixmap)
-            #self.ui.image_label.resize(pixmap.width(), pixmap.height())        
+            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())      
         else:
             self.ui.analyze_image_button.setEnabled(False)
             self.ui.model_1.setEnabled(False)
@@ -90,42 +74,32 @@ class UIFunctions(QMainWindow):
         
     def loadVideo(self):
         fileName = QFileDialog.getOpenFileName()
-        
+
         if fileName[0] != "":
-            self.media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
-            self.ui.play_button.setEnabled(True)
-        
-    def stateChanged(self):
-        if self.media.state() == QMediaPlayer.PlayingState:
-            pause_icon = QtGui.QIcon()
-            pause_icon.addPixmap(QtGui.QPixmap("images/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            self.ui.play_button.setIcon(pause_icon)
+            # Call the predict video
+
             
-        else:
-            play_icon = QtGui.QIcon()
-            play_icon.addPixmap(QtGui.QPixmap("images/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            self.ui.play_button.setIcon(play_icon)
-            
-    def positionChanged(self, position):
-        self.ui.video_slider.setValue(position)
-        
-    
-    def durationChanged(self, duration):
-        self.ui.video_slider.setRange(0, duration)
-        
-    def playVideo(self):
-        if self.media.state() == QMediaPlayer.PlayingState:
-            self.media.pause()
-        else:
-            self.media.play()
-            
-    def setVideoPosition(self, position):
-        self.media.setPosition(position)
-        
-        
-    def loadVideoAnalyzedSection(self):
-        fileName = QFileDialog.getOpenFileName()
-        
-        if fileName[0] != "":
-            self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
+            #Load the saved video
+            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.mp4")))
             self.analyze_media.play()    
+            
+              
+    def page1(self):
+        self.ui.Pages_Widget.setCurrentWidget(self.ui.page)
+        
+    def page2(self):
+        self.ui.Pages_Widget.setCurrentWidget(self.ui.page_2)
+        
+        # Clearing Image section content
+        self.ui.default_image.clear()
+        self.ui.result_image.clear()
+        self.ui.centroid_image_result.clear()
+        
+    def page3(self):
+        self.ui.Pages_Widget.setCurrentWidget(self.ui.page_3)
+        
+        # Clearing Image section content
+        self.ui.default_image.clear()
+        self.ui.result_image.clear()
+        self.ui.centroid_image_result.clear()
+

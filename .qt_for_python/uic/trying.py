@@ -227,7 +227,7 @@ class Ui_MainWindow(object):
 
         self.button_section = QFrame(self.page)
         self.button_section.setObjectName(u"button_section")
-        self.button_section.setMaximumSize(QSize(16777215, 150))
+        self.button_section.setMaximumSize(QSize(16777215, 120))
         self.button_section.setFrameShape(QFrame.NoFrame)
         self.button_section.setFrameShadow(QFrame.Raised)
         self.verticalLayout_8 = QVBoxLayout(self.button_section)
@@ -361,46 +361,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QVBoxLayout(self.page_2)
         self.verticalLayout_7.setSpacing(0)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(0, 6, 0, 6)
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.videoWidget = QWidget(self.page_2)
         self.videoWidget.setObjectName(u"videoWidget")
 
         self.verticalLayout_7.addWidget(self.videoWidget)
-
-        self.frame = QFrame(self.page_2)
-        self.frame.setObjectName(u"frame")
-        self.frame.setMaximumSize(QSize(16777215, 50))
-        self.frame.setFrameShape(QFrame.NoFrame)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_5 = QHBoxLayout(self.frame)
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.play_button = QPushButton(self.frame)
-        self.play_button.setObjectName(u"play_button")
-        self.play_button.setMaximumSize(QSize(50, 50))
-        self.play_button.setStyleSheet(u"QPushButton {\n"
-"	border: 0px solid;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	\n"
-"	background-color: rgb(85, 170, 255);\n"
-"}")
-        icon1 = QIcon()
-        icon1.addFile(u"images/pause.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.play_button.setIcon(icon1)
-        self.play_button.setIconSize(QSize(15, 15))
-
-        self.horizontalLayout_5.addWidget(self.play_button)
-
-        self.video_slider = QSlider(self.frame)
-        self.video_slider.setObjectName(u"video_slider")
-        self.video_slider.setMaximumSize(QSize(800, 16777215))
-        self.video_slider.setOrientation(Qt.Horizontal)
-
-        self.horizontalLayout_5.addWidget(self.video_slider)
-
-
-        self.verticalLayout_7.addWidget(self.frame)
 
         self.video_button_section = QFrame(self.page_2)
         self.video_button_section.setObjectName(u"video_button_section")
@@ -443,7 +408,9 @@ class Ui_MainWindow(object):
         self.analyze_video_result_section.setFrameShape(QFrame.NoFrame)
         self.analyze_video_result_section.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_9 = QHBoxLayout(self.analyze_video_result_section)
+        self.horizontalLayout_9.setSpacing(0)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.analyze_video_container = QWidget(self.analyze_video_result_section)
         self.analyze_video_container.setObjectName(u"analyze_video_container")
 
@@ -454,17 +421,28 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_9.addWidget(self.analyze_line_graph_video)
 
-        self.analyze_masking_video = QLabel(self.analyze_video_result_section)
-        self.analyze_masking_video.setObjectName(u"analyze_masking_video")
-
-        self.horizontalLayout_9.addWidget(self.analyze_masking_video)
-
 
         self.verticalLayout_9.addWidget(self.analyze_video_result_section)
 
+        self.frame = QFrame(self.page_3)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.NoFrame)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_5 = QHBoxLayout(self.frame)
+        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.analyze_video_masking_section = QLabel(self.frame)
+        self.analyze_video_masking_section.setObjectName(u"analyze_video_masking_section")
+
+        self.horizontalLayout_5.addWidget(self.analyze_video_masking_section)
+
+
+        self.verticalLayout_9.addWidget(self.frame)
+
         self.analyze_button_section = QFrame(self.page_3)
         self.analyze_button_section.setObjectName(u"analyze_button_section")
-        self.analyze_button_section.setMaximumSize(QSize(16777215, 150))
+        self.analyze_button_section.setMaximumSize(QSize(16777215, 120))
         self.analyze_button_section.setFrameShape(QFrame.NoFrame)
         self.analyze_button_section.setFrameShadow(QFrame.Raised)
         self.verticalLayout_10 = QVBoxLayout(self.analyze_button_section)
@@ -581,14 +559,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.Pages_Widget.setCurrentIndex(2)
+        self.Pages_Widget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Automated Social Distancing Monitoring System", None))
         self.Btn_Toggle.setText("")
         self.Btn_Menu_1.setText(QCoreApplication.translate("MainWindow", u"Image", None))
         self.Btn_Menu_2.setText(QCoreApplication.translate("MainWindow", u"Video", None))
@@ -601,10 +579,9 @@ class Ui_MainWindow(object):
         self.model_1.setText(QCoreApplication.translate("MainWindow", u"SSD Inception", None))
         self.model_2.setText(QCoreApplication.translate("MainWindow", u"RFCN", None))
         self.model_3.setText(QCoreApplication.translate("MainWindow", u"SSD Mobilenet", None))
-        self.play_button.setText("")
         self.VideoButton.setText(QCoreApplication.translate("MainWindow", u"Upload Video", None))
         self.analyze_line_graph_video.setText("")
-        self.analyze_masking_video.setText("")
+        self.analyze_video_masking_section.setText("")
         self.analyze_upload_video_button.setText(QCoreApplication.translate("MainWindow", u"Upload Video", None))
         self.analyze_model1.setText(QCoreApplication.translate("MainWindow", u"SSD Inception", None))
         self.analyze_model2.setText(QCoreApplication.translate("MainWindow", u"RFCN", None))
