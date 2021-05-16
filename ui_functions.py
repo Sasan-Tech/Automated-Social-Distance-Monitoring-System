@@ -79,11 +79,18 @@ class UIFunctions(QMainWindow):
         if fileName[0] != "":
             # Call the predict video
             img, ALL_CENTROIDS, ALL_COORDINATES, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
-            
+            self.ui.ReplayButton.setEnabled(True)
             print("Done process video")
             #Load the saved video
             self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
             self.media.play()    
+            
+    def loadVideoAnalyzedSection(self):
+        fileName = QFileDialog.getOpenFileName()
+        
+        if fileName[0] != "":
+            self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
+            self.analyze_media.play()    
             
               
     def page1(self):
@@ -104,4 +111,7 @@ class UIFunctions(QMainWindow):
         self.ui.default_image.clear()
         self.ui.result_image.clear()
         self.ui.centroid_image_result.clear()
+        
+
+    
 
