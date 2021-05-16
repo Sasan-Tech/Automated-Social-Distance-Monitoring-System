@@ -45,7 +45,7 @@ class UIFunctions(QMainWindow):
             pixmap = QPixmap(imagePath[0])
             resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
             self.ui.default_image.setPixmap(resize_pixmap)
-            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())      
+            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())
         else:
             self.ui.analyze_image_button.setEnabled(False)
             self.ui.model_1.setEnabled(False)
@@ -55,7 +55,7 @@ class UIFunctions(QMainWindow):
         
     def loadModelForImage(self, frozen_path):
         global img, centroids, coordinates
-        img, centroids, coordinates = predict_photo(frozen_path, image)
+        img, centroids = predict_photo(frozen_path, image)
         qimage = ImageQt(img)
         
         pixmap = QtGui.QPixmap.fromImage(qimage)
@@ -66,7 +66,7 @@ class UIFunctions(QMainWindow):
         self.ui.analyze_image_button.setEnabled(True) 
         
     def maskingForImage(self):
-        qimage = ImageQt(mask_area(centroids, coordinates, image))
+        qimage = ImageQt(mask_area(centroids, image))
         
         pixmap = QtGui.QPixmap.fromImage(qimage)
         resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
@@ -79,19 +79,44 @@ class UIFunctions(QMainWindow):
 
         if fileName[0] != "":
             # Call the predict video
-            img, ALL_CENTROIDS, ALL_COORDINATES, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
+            _, _ = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
             self.ui.ReplayButton.setEnabled(True)
             print("Done process video")
             #Load the saved video
             self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
             self.media.play()    
             
+
     def loadVideoAnalyzedSection(self):
         fileName = QFileDialog.getOpenFileName()
+        IMG_WIDTH = 768
+        IMG_HEIGHT = 432
         
         if fileName[0] != "":
+            ALL_CENTROIDS, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
+
             self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
-            self.analyze_media.play()    
+              
+            qimage = ImageQt(show_line_chart(VIOLATION_ARR))
+
+            pixmap = QtGui.QPixmap.fromImage(qimage)
+            resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+
+            self.ui.analyze_line_graph_video.setPixmap(resize_pixmap)    
+            self.ui.analyze_line_graph_video.resize(resize_pixmap.width(), resize_pixmap.height())  
+
+            qimage = ImageQt(mask_area(ALL_CENTROIDS, "temp/predicted_images.jpg"))
+                    
+            pixmap = QtGui.QPixmap.fromImage(qimage)
+            resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+
+            self.ui.analyze_video_masking_section.setPixmap(resize_pixmap)    
+            self.ui.analyze_video_masking_section.resize(resize_pixmap.width(), resize_pixmap.height()) 
+
+            self.analyze_media.play()   
+
+
+
             
               
     def page1(self):
@@ -113,42 +138,3 @@ class UIFunctions(QMainWindow):
         self.ui.result_image.clear()
         self.ui.centroid_image_result.clear()
         
-
-    
-
-
-
-''' For Replay
-
-self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
-self.media.play()  
-
-
-
-'''
-
-''' For masking, the image is taken from the one that has been returned from the video analysis
-
-qimage = ImageQt(mask_area(centroids, coordinates, image))
-        
-pixmap = QtGui.QPixmap.fromImage(qimage)
-resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
-
-self.ui.centroid_image_result.setPixmap(resize_pixmap)
-self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height())
-
-
-'''
-
-''' For timeline
-
-qimage = ImageQt(show_line_chart(VIOLATION_ARR))
-        
-pixmap = QtGui.QPixmap.fromImage(qimage)
-resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
-
-self.ui.centroid_image_result.setPixmap(resize_pixmap)
-self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height())
-
-
-'''

@@ -41,6 +41,7 @@ def show_line_chart(VIOLATION_ARR):
     ax1.clear()
     
     ax1.plot(xs, ys)
+    ax1.patch.set_facecolor('white')
 
     plt.xlabel("Frame number", fontsize=10)
     plt.ylabel("Number of violation", fontsize=10)

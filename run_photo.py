@@ -197,5 +197,12 @@ def predict_photo(frozen_graph, image):
   plt.savefig(buf)
   buf.seek(0)
   img = Image.open(buf)
-  return img, centroids, coordinates
+  returnedCentroid = []
+
+  for centroid in centroids:
+    if(centroid[0] > 0 and centroid[1] > 0):
+      returnedCentroid.append(centroid)
+
+
+  return img, returnedCentroid
 #============================================================================================================================

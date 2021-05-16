@@ -38,7 +38,6 @@ matplotlib.use('TkAgg')
 IMAGE_OUTPUT_SIZE = (12, 8)
 SAFE_DISTANCE = 100  # in pixels
 ALL_CENTROIDS = []
-ALL_COORDINATES = []
 VIOLATION_ARR = []
 
 def predict_video(frozen_graph, video):
@@ -196,9 +195,9 @@ def predict_video(frozen_graph, video):
                             axis.add_patch(matplotlib.patches.Circle(
                                 (centroid[0], centroid[1]), 3, color='yellow', zorder=20))
 
-                            #Add the centroids for the area analysis    
-                            ALL_CENTROIDS.append(centroid)
-                            ALL_COORDINATES.append(coordinate)
+                            if(centroid[0] > 0 and centroid[1] > 0):
+                                ALL_CENTROIDS.append(centroid)
+
 
                         # Display lines between centroids
                         for permutation in permutations:
@@ -242,6 +241,7 @@ def predict_video(frozen_graph, video):
 
                         axis.imshow(frame, interpolation='nearest')
                         VIOLATION_ARR.append([frame_number, violation])
+                        
 
                         fig.canvas.draw()  # Convert figure to numpy
 
@@ -260,19 +260,20 @@ def predict_video(frozen_graph, video):
                             new = False
 
                         out.write(img)
+                        print("Writing")
+
+                        cv2.imwrite('temp/predicted_images.jpg', frame)
 
                     else:
                         break
 
-
+            
             cap.release()
             out.release()             
-                   
-            return frame
 # =================================================================================================================
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # ======================== Run the program. Press 'esc' key on your keyboard to stop. =============================
-    img = run_inference()
+    run_inference()
     cv2.destroyAllWindows()
 
-    return img, ALL_CENTROIDS, ALL_COORDINATES, VIOLATION_ARR
+    return ALL_CENTROIDS, VIOLATION_ARR

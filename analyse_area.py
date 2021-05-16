@@ -38,17 +38,7 @@ NOT DONE YET. CANNOT RUN!
 
 '''
 
-def mask_area(ALL_CENTROIDS, coordinates, image):
-  #============================================================================================================================
-  #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  #============================================== Calculation purposes ========================================================
-  def calculate_permutation(centroids):
-    permutations = []
-    for permutation in itertools.permutations(centroids, 2):
-      if permutation[::-1] not in permutations:
-        permutations.append(permutation)
-    return permutations
-
+def mask_area(ALL_CENTROIDS, image):
   #============================================================================================================================
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   #============================================== Entrance ====================================================================
@@ -61,24 +51,13 @@ def mask_area(ALL_CENTROIDS, coordinates, image):
   image_gray = np.array(image_gray)
 
 # ------------------ Draw the area that has violation ------------------------
-  permutations = calculate_permutation(ALL_CENTROIDS)
-
   fig, axis = plt.subplots(figsize = (12, 8), dpi = 90) 
   axis.imshow(image_gray, cmap='gray', vmin=0, vmax=255, interpolation='none')
 
-  for coordinate, centroid in zip(coordinates, ALL_CENTROIDS):
+  for centroid in ALL_CENTROIDS:
     plt.axis('off')
-    for permutation in permutations:
-        x1 = permutation[0][0]
-        x2 = permutation[1][0]
-        y1 = permutation[0][1]
-        y2 = permutation[1][1]
+    axis.add_patch(matplotlib.patches.Circle((centroid[0], centroid[1]), 70, facecolor='#FF000030', zorder=20))
 
-        distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-        average_distance = distance/SAFE_DISTANCE
-        
-        if average_distance < 2:
-          axis.add_patch(matplotlib.patches.Circle((centroid[0], centroid[1]), 70, facecolor='#FF000001', zorder=20))
   #------------------------------------------------------------------------------
 
   #------------------------------------------------
