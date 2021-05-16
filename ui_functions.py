@@ -74,16 +74,13 @@ class UIFunctions(QMainWindow):
         
     def loadVideo(self):
         fileName = QFileDialog.getOpenFileName()
-        
+
         if fileName[0] != "":
-            self.media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
-            self.analyze_media.play()  
-          
-    def loadVideoAnalyzedSection(self):
-        fileName = QFileDialog.getOpenFileName()
-        
-        if fileName[0] != "":
-            self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
+            # Call the predict video
+
+            
+            #Load the saved video
+            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.mp4")))
             self.analyze_media.play()    
             
               
