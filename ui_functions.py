@@ -35,31 +35,15 @@ class UIFunctions(QMainWindow):
         
         if not (imagePath[0] == ""):
             image = imagePath[0]
-            #img, centroids, coordinates = predict_photo(frozen_path, imagePath[0])
             
             self.ui.model_1.setEnabled(True)
             self.ui.model_2.setEnabled(True)
             self.ui.model_3.setEnabled(True)
-            
-            
-            
-            
+                       
             pixmap = QPixmap(imagePath[0])
             resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
             self.ui.default_image.setPixmap(resize_pixmap)
-            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())
-
-            #Turn this on to get the distance detection
-            #qimage = ImageQt(img)
-
-
-            # Turn this one to get the masked photo
-            #qimage = ImageQt(mask_area(centroids, coordinates, imagePath[0]))
-            
-
-            #pixmap = QtGui.QPixmap.fromImage(qimage)
-            #self.ui.image_label.setPixmap(pixmap)
-            #self.ui.image_label.resize(pixmap.width(), pixmap.height())        
+            self.ui.default_image.resize(resize_pixmap.width(), resize_pixmap.height())      
         else:
             self.ui.analyze_image_button.setEnabled(False)
             self.ui.model_1.setEnabled(False)
