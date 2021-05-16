@@ -566,7 +566,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Object Detection", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Automated Social Distancing Monitoring System", None))
         self.Btn_Toggle.setText("")
         self.Btn_Menu_1.setText(QCoreApplication.translate("MainWindow", u"Image", None))
         self.Btn_Menu_2.setText(QCoreApplication.translate("MainWindow", u"Video", None))
