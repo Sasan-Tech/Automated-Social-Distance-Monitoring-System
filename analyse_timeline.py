@@ -43,9 +43,9 @@ def show_line_chart(VIOLATION_ARR):
     ax1.plot(xs, ys)
     ax1.patch.set_facecolor('white')
 
-    plt.xlabel("Frame number", fontsize=10)
-    plt.ylabel("Number of violation", fontsize=10)
-    plt.tick_params(axis='both', labelsize=8)
+    plt.xlabel("Frame number", fontsize=10, color='white')
+    plt.ylabel("Number of violation", fontsize=10, color='white')
+    plt.tick_params(axis='both', labelsize=8, labelcolor='white')
 
 
     buf = io.BytesIO()

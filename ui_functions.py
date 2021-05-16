@@ -11,7 +11,10 @@ from run_video import *
 from analyse_timeline import *
 
 class UIFunctions(QMainWindow):
-
+    
+    ####################
+    ### MENU SECTION ###
+    ####################
     def toggleMenu(self, maxWidth, enable):
         if enable:
             width = self.ui.frame_left_menu.width()
@@ -28,7 +31,11 @@ class UIFunctions(QMainWindow):
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
             self.animation.start()
-            
+    
+    
+    #####################
+    ### IMAGE SECTION ###
+    #####################
     def uploadImage(self, frozen_path):
         global image, IMG_WIDTH, IMG_HEIGHT
         imagePath = QFileDialog.getOpenFileName()
@@ -52,7 +59,6 @@ class UIFunctions(QMainWindow):
             self.ui.model_2.setEnabled(False)
             self.ui.model_3.setEnabled(False)
         
-        
     def loadModelForImage(self, frozen_path):
         global img, centroids, coordinates
         img, centroids = predict_photo(frozen_path, image)
@@ -74,48 +80,69 @@ class UIFunctions(QMainWindow):
         self.ui.centroid_image_result.setPixmap(resize_pixmap)
         self.ui.centroid_image_result.resize(resize_pixmap.width(), resize_pixmap.height()) 
         
+        
+    #####################
+    ### VIDEO SECTION ###
+    #####################    
+        
     def loadVideo(self):
         fileName = QFileDialog.getOpenFileName()
 
         if fileName[0] != "":
-            # Call the predict video
-            _, _ = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
-            self.ui.ReplayButton.setEnabled(True)
-            print("Done process video")
-            #Load the saved video
-            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
-            self.media.play()    
+            self.videoLink = fileName[0]
+            self.ui.video_section_model1.setEnabled(True)
+            self.ui.video_section_model2.setEnabled(True)
+            self.ui.video_section_model3.setEnabled(True)   
             
 
-    def loadVideoAnalyzedSection(self):
+    def loadModelVideoSection(self, frozen_graph):
+        self.media.setMedia(QMediaContent())
+        _, _ = predict_video(frozen_graph, self.videoLink)
+        self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
+        self.media.play()   
+        self.ui.ReplayButton.setEnabled(True)
+        
+                 
+    #######################
+    ### ANALYZE SECTION ###
+    ####################### 
+
+    def loadVideoAnalyzed(self):
         fileName = QFileDialog.getOpenFileName()
-        IMG_WIDTH = 768
-        IMG_HEIGHT = 432
         
         if fileName[0] != "":
-            ALL_CENTROIDS, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
+            self.videoLink = fileName[0]
+            self.ui.analyze_model1.setEnabled(True)
+            self.ui.analyze_model2.setEnabled(True)
+            self.ui.analyze_model3.setEnabled(True)
+            
 
-            self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(fileName[0])))
-              
-            qimage = ImageQt(show_line_chart(VIOLATION_ARR))
+    def loadModelAnalyzeSection(self, frozen_graph):
+        IMG_WIDTH = 768
+        IMG_HEIGHT = 432
+        self.media.setMedia(QMediaContent())
 
-            pixmap = QtGui.QPixmap.fromImage(qimage)
-            resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+        ALL_CENTROIDS, VIOLATION_ARR = predict_video(frozen_graph, self.videoLink)
 
-            self.ui.analyze_line_graph_video.setPixmap(resize_pixmap)    
-            self.ui.analyze_line_graph_video.resize(resize_pixmap.width(), resize_pixmap.height())  
+        self.analyze_media.setMedia(QMediaContent(QUrl.fromLocalFile(self.videoLink)))
+            
+        qimage = ImageQt(show_line_chart(VIOLATION_ARR))
 
-            qimage = ImageQt(mask_area(ALL_CENTROIDS, "temp/predicted_images.jpg"))
-                    
-            pixmap = QtGui.QPixmap.fromImage(qimage)
-            resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
+        pixmap = QtGui.QPixmap.fromImage(qimage)
+        resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
 
-            self.ui.analyze_video_masking_section.setPixmap(resize_pixmap)    
-            self.ui.analyze_video_masking_section.resize(resize_pixmap.width(), resize_pixmap.height()) 
+        self.ui.analyze_line_graph_video.setPixmap(resize_pixmap)    
+        self.ui.analyze_line_graph_video.resize(resize_pixmap.width(), resize_pixmap.height())  
 
-            self.analyze_media.play()   
+        qimage = ImageQt(mask_area(ALL_CENTROIDS, "temp/predicted_images.jpg"))
+                
+        pixmap = QtGui.QPixmap.fromImage(qimage)
+        resize_pixmap = pixmap.scaled(IMG_WIDTH, IMG_HEIGHT)
 
+        self.ui.analyze_video_masking_section.setPixmap(resize_pixmap)    
+        self.ui.analyze_video_masking_section.resize(resize_pixmap.width(), resize_pixmap.height()) 
 
+        self.analyze_media.play()   
 
             
               

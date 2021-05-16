@@ -68,31 +68,42 @@ class MainWindow(QMainWindow):
         ### VIDEO SECTION ###
         self.media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.ui.ReplayButton.setEnabled(False)
+        self.ui.video_section_model1.setEnabled(False)
+        self.ui.video_section_model2.setEnabled(False)
+        self.ui.video_section_model3.setEnabled(False)
 
-        video = QVideoWidget()
-        
-        vBox = QVBoxLayout()
-        vBox.addWidget(video)
-        self.ui.videoWidget.setLayout(vBox)
-        
         self.ui.VideoButton.clicked.connect(lambda: UIFunctions.loadVideo(self))
         
-        self.media.setVideoOutput(video)
+        self.ui.video_section_model1.clicked.connect(lambda: UIFunctions.loadModelVideoSection(self, ssd_inception_frozen_path))
+        self.ui.video_section_model2.clicked.connect(lambda: UIFunctions.loadModelVideoSection(self, rfcn_frozen_path))
+        self.ui.video_section_model3.clicked.connect(lambda: UIFunctions.loadModelVideoSection(self, ssd_mobilenet_v1_coco_frozen_path))
         
+        video = QVideoWidget()
+        vBox = QVBoxLayout()
+        vBox.addWidget(video)
+
+        self.ui.videoWidget.setLayout(vBox)    
+        self.media.setVideoOutput(video)
         self.ui.ReplayButton.clicked.connect(lambda: self.media.play())
         
 
         ### ANALYZE SECTION ###
         self.analyze_media = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.ui.analyze_model1.setEnabled(False)
+        self.ui.analyze_model2.setEnabled(False)
+        self.ui.analyze_model3.setEnabled(False)
+
+        self.ui.analyze_upload_video_button.clicked.connect(lambda: UIFunctions.loadVideoAnalyzed(self))
+
+        self.ui.analyze_model1.clicked.connect(lambda: UIFunctions.loadModelAnalyzeSection(self, ssd_inception_frozen_path))
+        self.ui.analyze_model2.clicked.connect(lambda: UIFunctions.loadModelAnalyzeSection(self, rfcn_frozen_path))
+        self.ui.analyze_model3.clicked.connect(lambda: UIFunctions.loadModelAnalyzeSection(self, ssd_mobilenet_v1_coco_frozen_path))
         
         analyzeVideo = QVideoWidget()
-        
         vAnalyzedBox = QVBoxLayout()
         vAnalyzedBox.addWidget(analyzeVideo)
+
         self.ui.analyze_video_container.setLayout(vAnalyzedBox)
-        
-        self.ui.analyze_upload_video_button.clicked.connect(lambda: UIFunctions.loadVideoAnalyzedSection(self))
-        
         self.analyze_media.setVideoOutput(analyzeVideo)
         
         

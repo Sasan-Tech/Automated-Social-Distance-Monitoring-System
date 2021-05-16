@@ -900,6 +900,12 @@ QPushButton:hover {
                     </property>
                     <item>
                      <widget class="QPushButton" name="video_section_model1">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
@@ -908,7 +914,16 @@ QPushButton:hover {
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">color: white;</string>
+                       <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+	background-color: rgb(35, 35, 35);
+	border: 1px solid;
+}
+
+QPushButton:hover {
+	background-color: rgb(85, 170, 255);
+}
+</string>
                       </property>
                       <property name="text">
                        <string>SSD Inception</string>
@@ -917,6 +932,12 @@ QPushButton:hover {
                     </item>
                     <item>
                      <widget class="QPushButton" name="video_section_model2">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
@@ -925,7 +946,16 @@ QPushButton:hover {
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">color: white;</string>
+                       <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+	background-color: rgb(35, 35, 35);
+	border: 1px solid;
+}
+
+QPushButton:hover {
+	background-color: rgb(85, 170, 255);
+}
+</string>
                       </property>
                       <property name="text">
                        <string>RFCN</string>
@@ -934,6 +964,12 @@ QPushButton:hover {
                     </item>
                     <item>
                      <widget class="QPushButton" name="video_section_model3">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
@@ -942,7 +978,16 @@ QPushButton:hover {
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">color: white;</string>
+                       <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+	background-color: rgb(35, 35, 35);
+	border: 1px solid;
+}
+
+QPushButton:hover {
+	background-color: rgb(85, 170, 255);
+}
+</string>
                       </property>
                       <property name="text">
                        <string>SSD Mobilenet</string>

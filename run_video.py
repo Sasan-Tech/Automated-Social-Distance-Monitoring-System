@@ -37,10 +37,11 @@ matplotlib.use('TkAgg')
 # ===================================== Defining Path & Other Variables ===========================================
 IMAGE_OUTPUT_SIZE = (12, 8)
 SAFE_DISTANCE = 100  # in pixels
-ALL_CENTROIDS = []
-VIOLATION_ARR = []
 
 def predict_video(frozen_graph, video):
+    ALL_CENTROIDS = []
+    VIOLATION_ARR = []
+
     # define the label_map.pbtxt path here
     label_map = label_map_util.load_labelmap("label_map.pbtxt")
 
