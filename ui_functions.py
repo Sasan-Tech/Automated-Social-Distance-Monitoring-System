@@ -80,9 +80,10 @@ class UIFunctions(QMainWindow):
             # Call the predict video
             img, ALL_CENTROIDS, ALL_COORDINATES, VIOLATION_ARR = predict_video("exported/rfcn_exported/frozen_inference_graph.pb", fileName[0])
             
+            print("Done process video")
             #Load the saved video
-            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.mp4")))
-            self.analyze_media.play()    
+            self.media.setMedia(QMediaContent(QUrl.fromLocalFile("temp/tempVideo.avi")))
+            self.media.play()    
             
               
     def page1(self):
