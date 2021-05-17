@@ -376,7 +376,7 @@ QPushButton:hover {
              </font>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="page">
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -677,6 +677,7 @@ QPushButton:hover {
                       </property>
                       <property name="font">
                        <font>
+                        <family>Montserrat</family>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>
@@ -708,6 +709,7 @@ QPushButton:hover {
                       </property>
                       <property name="font">
                        <font>
+                        <family>Montserrat</family>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>
@@ -762,7 +764,7 @@ QPushButton:hover {
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>150</height>
+                  <height>120</height>
                  </size>
                 </property>
                 <property name="frameShape">
@@ -1080,7 +1082,7 @@ QPushButton:hover {
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
-                 <item>
+                 <item alignment="Qt::AlignHCenter">
                   <widget class="QLabel" name="analyze_video_masking_section">
                    <property name="text">
                     <string/>
@@ -1152,7 +1154,7 @@ QPushButton:hover {
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
-                        <pointsize>10</pointsize>
+                        <pointsize>15</pointsize>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>

@@ -89,6 +89,7 @@ class UIFunctions(QMainWindow):
         fileName = QFileDialog.getOpenFileName()
 
         if fileName[0] != "":
+            self.media.setMedia(QMediaContent())
             self.videoLink = fileName[0]
             self.ui.video_section_model1.setEnabled(True)
             self.ui.video_section_model2.setEnabled(True)
@@ -111,6 +112,7 @@ class UIFunctions(QMainWindow):
         fileName = QFileDialog.getOpenFileName()
         
         if fileName[0] != "":
+            self.analyze_media.setMedia(QMediaContent())
             self.videoLink = fileName[0]
             self.ui.analyze_model1.setEnabled(True)
             self.ui.analyze_model2.setEnabled(True)
@@ -149,6 +151,15 @@ class UIFunctions(QMainWindow):
     def page1(self):
         self.ui.Pages_Widget.setCurrentWidget(self.ui.page)
         
+        # Clearing Video section content
+        self.media.setMedia(QMediaContent())
+        
+        # Clearing Analyze section content
+        self.ui.analyze_line_graph_video.clear()
+        self.ui.analyze_video_masking_section.clear()
+        self.analyze_media.setMedia(QMediaContent())
+        
+        
     def page2(self):
         self.ui.Pages_Widget.setCurrentWidget(self.ui.page_2)
         
@@ -157,8 +168,16 @@ class UIFunctions(QMainWindow):
         self.ui.result_image.clear()
         self.ui.centroid_image_result.clear()
         
+        # Clearing Analyze section content
+        self.ui.analyze_line_graph_video.clear()
+        self.ui.analyze_video_masking_section.clear()
+        self.analyze_media.setMedia(QMediaContent())
+        
     def page3(self):
         self.ui.Pages_Widget.setCurrentWidget(self.ui.page_3)
+        
+        # Clearing Video section content
+        self.media.setMedia(QMediaContent())
         
         # Clearing Image section content
         self.ui.default_image.clear()

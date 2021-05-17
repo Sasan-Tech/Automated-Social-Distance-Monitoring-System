@@ -1,15 +1,6 @@
-################################################################################
-##
-## BY: WANDERSON M.PIMENTA
-## PROJECT MADE WITH: Qt Designer and PySide2
-## V: 1.0.0
-##
-################################################################################
-
 import sys
 import platform
 from PyQt5.QtWidgets import QApplication, QMainWindow
-#from PySide2 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent
 from PyQt5.QtGui import QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient
 from PyQt5.QtWidgets import *
@@ -36,13 +27,13 @@ class MainWindow(QMainWindow):
         ## PAGES
         ########################################################################
 
-        # PAGE 1
+        # PAGE 1 - IMAGE SECTION
         self.ui.Btn_Menu_1.clicked.connect(lambda: UIFunctions.page1(self))
 
-        # PAGE 2
+        # PAGE 2 - VIDEO SECTION
         self.ui.Btn_Menu_2.clicked.connect(lambda: UIFunctions.page2(self))
         
-        # PAGE 3
+        # PAGE 3 - ANALYZE SECTION 
         self.ui.Btn_Menu_3.clicked.connect(lambda: UIFunctions.page3(self))
         
         
