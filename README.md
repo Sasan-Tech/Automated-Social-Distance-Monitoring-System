@@ -16,7 +16,8 @@ Group Members:
 <!-- tell them that the demo video is avaiable to guide them on how to use the GUI -->
 
 # Folder Management
-<!-- Directory Tree -->
+<!-- Directory Tree for google drive -->
+<!-- tell that Folder Management for GUI and python can follow the ones that have been provided in this Repository -->
 
 
 # Prior preparation
