@@ -42,17 +42,17 @@ Before we can start to train the model and run the program, we may need to prepa
 
 # Steps
 
-###1. Prepare the dataset
+### 1. Prepare the dataset
 Download the dataset that will be used for training the model [here](https://academictorrents.com/details/35e83806d9362a57be736f370c821960eb2f2a01)
-###2. Download the pre-trained model
+### 2. Download the pre-trained model
 Download the pre-trained model that you want to use [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md). In this project our team have used 3 models **(rfcn, ssd_mobilenet_v1_coco & ssd_inception)**
 
 > Note: If the selected model cannot be downloaded directly, copy the link address and paste it on a new tab.
 
 <!-- Download the model that they want to use, https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md -->
 
-###3. Create all the required folders in your Google Drive
-By referring to the picture shown in [Folder Management](#-folder-management), there are several things you need to pay attention to while creating the SocialDistancing folder in your Google Drive:
+### 3. Create all the required folders in your Google Drive
+By referring to the picture shown in [Folder Management](#folder-management), there are several things you need to pay attention to while creating the SocialDistancing folder in your Google Drive:
 
 - Import files from the [dataset](https://academictorrents.com/details/35e83806d9362a57be736f370c821960eb2f2a01) that has been downloaded into this path **/Data**
 - Import the downloaded [model](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md) folder into this path **/Models/pre-trained**
@@ -63,14 +63,14 @@ By referring to the picture shown in [Folder Management](#-folder-management), t
 - Create a folder to store the exported model inside this path **/Models/exported**
   > Recommended name format: 'model name'\_'exported'. E.g. 'rfcn_exported'
 
-For the rest, just create the folders and files using the same name (Recommended) and follow the folder hierarchy shown in [Folder Management](#-folder-management)
-###4. Run and follow the commands given inside the Google Colaboratory
+For the rest, just create the folders and files using the same name (Recommended) and follow the folder hierarchy shown in [Folder Management](#folder-management)
+### 4. Run and follow the commands given inside the Google Colaboratory
 In order to produce a model that can be used to automatically detect persons and analyze the social distance between them, you need follow the steps inside our Colaboratory. Click this link [here](https://colab.research.google.com/drive/1UJRB5T5CDHOTNQlGPTz2-0vh0zyZaiM6?usp=sharing) to open the Colaboratory or you might want to open it through **ASDTM.ipynb** file provided in this repository.
 
-####Follow below step immediately if you want to use the Automated Social Distancing Monitoring System right away by using the provided models or you have followed all the steps given in the Colaboratory & successfully produced your exported model:
+#### Follow below step immediately if you want to use the Automated Social Distancing Monitoring System right away by using the provided models or you have followed all the steps given in the Colaboratory & successfully produced your exported model:
 
-###5. Clone this repository (If you haven't done so) and run the system
-####Using the provided models
+### 5. Clone this repository (If you haven't done so) and run the system
+#### Using the provided models
 Clone this GitHub repository to your local directory and run the **main.py** file
 
 <!-- Make all the required folders in drive -->
